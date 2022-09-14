@@ -1,16 +1,18 @@
 import { DataTypes, Model } from "sequelize"
 import sequelize from "./index"
-
-// user 모델의 구성요소를 명시
-interface UsersAttributes {
-  id?: number //? id는 not null autoincrement로 ?를 이용해 와일드 카드 적용.
-  email: string //? 필요한 요소를 적어준다.
-}
+import { UsersAttributes } from "./interface/User"
+import { Provider } from "./interface/Provider"
+import { Gamjas } from "./Gamja"
 
 export class Users extends Model<UsersAttributes> {
-  //? 조회 후 사용 되어질 요소들의 타입명시 설정이 되어 있지 않으면 조회시 또는 조회 후 데이터 타입체크에서 오류
-  public readonly id!: number
+  public readonly idx!: number
   public email!: string
+  public password!: string
+  public name!: string
+  public birth!: Date
+  public provider!: Provider
+  public providerId!: string
+
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
 
@@ -20,15 +22,41 @@ export class Users extends Model<UsersAttributes> {
 //? 모델 생성
 Users.init(
   {
+    idx: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     email: {
+      type: DataTypes.STRING(50),
+      unique: true,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING(120),
+      allowNull: true,
+    },
+    name: {
       type: DataTypes.STRING(45),
       allowNull: false,
+    },
+    birth: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    provider: {
+      type: DataTypes.STRING(15),
+      allowNull: false,
+    },
+    providerId: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
     },
   },
   {
     modelName: "Users",
-    tableName: "users",
-    sequelize, //? 생성한 Sequelize 객체 패싱
+    tableName: "tbl_user",
+    sequelize,
     freezeTableName: true,
   }
 )
