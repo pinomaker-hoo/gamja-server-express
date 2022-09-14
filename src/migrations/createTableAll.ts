@@ -17,7 +17,7 @@ console.log(`
 let migrationAllTable = async () => {
   let migrationFiles: string[] = []
   //? 파일 시스템으로 디렉토리 자체를 읽어온다.
-  fs.readdir(path.join(__dirname, "/", "tables"), async (err, files) => {
+  fs.readdir(path.join(__dirname, "/", "create-table"), async (err, files) => {
     if (err) console.log("err : ", err)
     if (files) {
       //? 읽어온 파일들의 이름을 하나씩 배열에 담아준다.
@@ -30,7 +30,7 @@ let migrationAllTable = async () => {
         console.log("Migration File Name : ", el)
 
         const { stdout, stderr } = await asyncExec(
-          `./node_modules/.bin/ts-node "${__dirname}/tables/${el}"`
+          `./node_modules/.bin/ts-node "${__dirname}/create-table/${el}"`
         )
         if (stdout) console.log(stdout)
         if (stderr) console.error("Std Err : ", stderr)
