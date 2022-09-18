@@ -1,22 +1,17 @@
-import { Association, DataTypes, Model } from "sequelize"
-import sequelize from "./index"
-import { GamjasAttributes } from "./interface/Gamja"
-import { Users } from "./User"
+import { DataTypes, Model } from "sequelize"
+import sequelize from "../index"
+import { GamjaAttributes } from "../interface/Gamja"
 
-export class Gamjas extends Model<GamjasAttributes> {
+export class Gamja extends Model<GamjaAttributes> {
   public readonly idx!: number
   public name!: string
   public exp!: number
-  public userIdx?: number
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
-
-  public static associations: {}
 }
 
-//? 모델 생성
-Gamjas.init(
+Gamja.init(
   {
     idx: {
       type: DataTypes.INTEGER,
@@ -33,14 +28,9 @@ Gamjas.init(
     },
   },
   {
-    modelName: "Gamjas",
+    modelName: "Gamja",
     tableName: "tbl_gamja",
     sequelize,
     freezeTableName: true,
   }
 )
-
-Gamjas.belongsTo(Users, {
-  foreignKey: "userIdx",
-  as: "userIdx",
-})

@@ -1,9 +1,9 @@
-import { Gamjas } from "../../models/Gamja"
+import { User } from "../../models/domain/User"
 
 console.log("======Create User Table======")
 
-const create_table_users = async () => {
-  await Gamjas.sync({ force: true })
+const create_table_user = async () => {
+  await User.sync({ force: true })
     .then(() => {
       console.log("✅Success Create User Table")
     })
@@ -12,4 +12,4 @@ const create_table_users = async () => {
     })
 }
 
-create_table_users()
+create_table_user()

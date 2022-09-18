@@ -1,11 +1,10 @@
 import { Provider } from "./Provider"
 
-export interface UsersAttributes {
+export interface UserAttributes {
   idx?: number
   email: string
   password: string
   name: string
-  birth: Date
   provider: Provider
   providerId: string
 }
