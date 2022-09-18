@@ -1,5 +1,5 @@
 import bodyParser from "body-parser"
-import express, { Request, Response } from "express"
+import express from "express"
 import cors from "cors"
 import sequelize from "./models"
 
@@ -9,14 +9,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 
-sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("데이터베이스 연결 성공")
-  })
-  .catch((err) => {
-    console.error(err)
-  })
+app.use("/api", require("./api"))
+app.get("/", (req, res) => res.send("SEVER ON"))
 
 const port = 3000
 app.listen(port, async () => {
