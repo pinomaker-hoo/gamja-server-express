@@ -8,7 +8,7 @@ import { Recode } from "./Recode"
 import { Board } from "./Board"
 
 export class User extends Model<UserAttributes> {
-  public readonly idx!: number
+  public readonly idx?: number
   public email!: string
   public password!: string
   public name!: string
