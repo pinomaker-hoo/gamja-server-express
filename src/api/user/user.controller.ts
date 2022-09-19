@@ -33,8 +33,11 @@ exports.localLogin = async (req: Request, res: Response) => {
       if (err) {
         res.send(err)
       }
-      // jwt.sign('token내용', 'JWT secretkey')
-      const token = jwt.sign({ name: "hello" }, "123")
+      const token = jwt.sign({ idx: user.idx }, "123")
+      res.cookie("accessToken", token, {
+        expires: new Date(Date.now() + 86400e3),
+        sameSite: "lax",
+      })
       return res.json({ user, token })
     })
   })(req, res)

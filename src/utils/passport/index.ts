@@ -1,10 +1,9 @@
 import passportLocal from "passport-local"
-import passportJwt from "passport-jwt"
+import passportJwt, { ExtractJwt } from "passport-jwt"
 import passport from "passport"
-const local = require("./localStrategy")
-
 import { User } from "../../models/domain/User"
 import * as bcrypt from "bcryptjs"
+import { Request } from "express"
 
 const LocalStrategy = passportLocal.Strategy
 const JWTStrategy = passportJwt.Strategy
@@ -35,24 +34,28 @@ module.exports = () => {
       }
     )
   )
-  //   passport.use()
-
-  //JWT Strategy
-  //   passport.use(
-  //     new JWTStrategy(
-  //       {
-  //         jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  //         secretOrKey: process.env.JWT_SECRET,
-  //       },
-  //       function (jwtPayload, done) {
-  //         return UserModel.findOneById(jwtPayload.id)
-  //           .then((user) => {
-  //             return done(null, user)
-  //           })
-  //           .catch((err) => {
-  //             return done(err)
-  //           })
-  //       }
-  //     )
-  //   )
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromExtractors([
+          (request: Request) => {
+            console.log(request.cookies.accessToken)
+            return request.cookies.accessToken
+          },
+        ]),
+        secretOrKey: "123",
+      },
+      async (jwtPayload, done) => {
+        try {
+          const findUser = await User.findOne({
+            where: { idx: jwtPayload.idx },
+          })
+          return done(null, findUser)
+        } catch (err) {
+          console.error(err)
+          done(err)
+        }
+      }
+    )
+  )
 }
