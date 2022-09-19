@@ -3,7 +3,7 @@ import { User } from "../../models/domain/User"
 import { Provider } from "../../models/interface/Provider"
 import * as bcrypt from "bcryptjs"
 import passport from "passport"
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript"
+import jwt from "jsonwebtoken"
 
 exports.localSave = async (req: Request, res: Response) => {
   const { email, password, name } = req.body
@@ -20,7 +20,22 @@ exports.localSave = async (req: Request, res: Response) => {
     console.log(err)
   }
 }
-exports.test = async (req: Request, res: Response) => {
-  console.log("Hello world")
-  res.json("Hello world")
+
+exports.localLogin = async (req: Request, res: Response) => {
+  passport.authenticate("local", { session: false }, (err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: "Something is not right",
+        user: user,
+      })
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        res.send(err)
+      }
+      // jwt.sign('token내용', 'JWT secretkey')
+      const token = jwt.sign({ name: "hello" }, "123")
+      return res.json({ user, token })
+    })
+  })(req, res)
 }
