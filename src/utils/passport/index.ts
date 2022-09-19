@@ -1,13 +1,14 @@
 import passportLocal from "passport-local"
 import passportJwt, { ExtractJwt } from "passport-jwt"
+import passportKakao from "passport-kakao"
 import passport from "passport"
 import { User } from "../../models/domain/User"
 import * as bcrypt from "bcryptjs"
 import { Request } from "express"
 
 const LocalStrategy = passportLocal.Strategy
-const JWTStrategy = passportJwt.Strategy
-const ExtractJWT = passportJwt.ExtractJwt
+const JwtStrategy = passportJwt.Strategy
+const KakaoStrategy = passportKakao.Strategy
 
 module.exports = () => {
   passport.use(
@@ -35,7 +36,7 @@ module.exports = () => {
     )
   )
   passport.use(
-    new JWTStrategy(
+    new JwtStrategy(
       {
         jwtFromRequest: ExtractJwt.fromExtractors([
           (request: Request) => {
@@ -55,6 +56,27 @@ module.exports = () => {
           console.error(err)
           done(err)
         }
+      }
+    )
+  )
+  passport.use(
+    new KakaoStrategy(
+      {
+        clientID: "4ec15bfbe24f7905a7b3d99a8a988aae",
+        callbackURL: "http://localhost:3030/api/user/kakao/callback",
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        const profileJson = profile._json
+        const kakao_account = profileJson.kakao_account
+        const payload = {
+          name: kakao_account.profile.nickname,
+          kakaoId: profileJson.id,
+          email:
+            kakao_account.has_email && !kakao_account.email_needs_agreement
+              ? kakao_account.email
+              : null,
+        }
+        done(null, payload)
       }
     )
   )
