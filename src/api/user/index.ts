@@ -6,13 +6,15 @@ const user = require("./user.controller")
 
 router.post("/", user.localSave)
 router.post("/local", user.localLogin)
-router.get(
-  "/test",
-  passport.authenticate("jwt", { session: false }),
-  (req: Request, res: Response) => {
-    res.send("Success")
-  }
-)
+router.get("/kakao", passport.authenticate("kakao"))
+router.get("/kakao/callback", user.kakaoLogin)
+// router.get(
+//   "/test",
+//   passport.authenticate("jwt", { session: false }),
+//   (req: Request, res: Response) => {
+//     res.send("Success")
+//   }
+// )
 
 module.exports = router
 export {}

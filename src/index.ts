@@ -26,7 +26,7 @@ app.use(passport.initialize())
 app.use("/api", require("./api"))
 app.get("/", (req, res) => res.send("SEVER ON"))
 
-const port = 3000
+const port = 3030
 app.listen(port, async () => {
   console.log(`SERVER ON PORT : ${port}`)
   await sequelize

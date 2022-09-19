@@ -42,3 +42,25 @@ exports.localLogin = async (req: Request, res: Response) => {
     })
   })(req, res)
 }
+
+exports.kakaoLogin = async (req: Request, res: Response) => {
+  passport.authenticate("kakao", (err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: "Something is not right",
+        user: user,
+      })
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        res.send(err)
+      }
+      const token = jwt.sign({ idx: user.idx }, "123")
+      res.cookie("accessToken", token, {
+        expires: new Date(Date.now() + 86400e3),
+        sameSite: "lax",
+      })
+      return res.redirect("http://localhost:5173")
+    })
+  })(req, res)
+}
