@@ -21,13 +21,6 @@ app.use(
     credentials: true,
   })
 )
-
-// origin: true,
-// methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-// preflightContinue: false,
-// optionsSuccessStatus: 204,
-// credentials: true,
-
 app.use(passport.initialize())
 
 app.use("/api", require("./api"))
