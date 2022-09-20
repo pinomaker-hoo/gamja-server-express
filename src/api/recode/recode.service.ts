@@ -3,8 +3,13 @@ import { Recode } from "../../models/domain/Recode"
 
 exports.saveRecode = async (req: Request, res: Response) => {
   try {
-    const { menu, userIdx, kcal } = req.body
-    const recode: Recode = await Recode.create({ menu, userIdx, kcal })
+    const user: any = req.user
+    const { menu, kcal } = req.body
+    const recode: Recode = await Recode.create({
+      menu,
+      userIdx: user.idx,
+      kcal,
+    })
     res.json(recode)
   } catch (err) {
     console.log(err)
@@ -14,8 +19,10 @@ exports.saveRecode = async (req: Request, res: Response) => {
 
 exports.getRecode = async (req: Request, res: Response) => {
   try {
-    const { idx } = req.params
-    const recode = await Recode.findAll({ where: { userIdx: idx } })
+    const user: any = req.user
+    const recode: Recode[] = await Recode.findAll({
+      where: { userIdx: user.idx },
+    })
     res.json(recode)
   } catch (err) {
     console.log(err)
