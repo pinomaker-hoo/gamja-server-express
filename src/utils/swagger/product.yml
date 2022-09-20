@@ -1,0 +1,16 @@
+components:
+  schemas:
+    Product:
+      properties:
+        idx:
+          type: integer
+          description: 고유 번호
+        email:
+          type: string
+          description: 유저 이메일
+        password:
+          type: string
+          description: 유저 패스워드
+        name:
+          type: string
+          description: 유저 이름
