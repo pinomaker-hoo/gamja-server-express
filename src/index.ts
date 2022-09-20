@@ -1,15 +1,16 @@
-import bodyParser from "body-parser"
 import express from "express"
 import cors from "cors"
 import sequelize from "./models"
 import passport from "passport"
 import cookieParser from "cookie-parser"
-import { swaggerUi, specs } from "./utils/swagger/swagger"
+import swaggerUi from "swagger-ui-express"
 import YAML from "yamljs"
 import path from "path"
 
 const PassportCofig = require("./utils/passport/index")
-// const swaggerSpec = YAML.load(path.join(__dirname, "../build/swagger.yaml"))
+const swaggerSpec = YAML.load(
+  path.join(__dirname, "./utils/swagger/openapi.yaml")
+)
 const app = express()
 
 PassportCofig()
@@ -27,9 +28,8 @@ app.use(
 )
 
 app.use(passport.initialize())
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use("/api", require("./api"))
-
 app.get("/", (req, res) => res.send("SEVER ON"))
 
 const port = 3030

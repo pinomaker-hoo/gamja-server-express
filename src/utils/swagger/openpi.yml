@@ -1,9 +1,0 @@
-openapi: "3.0.0"
-info:
-  version: 1.0.0
-  title: GAMJA API docs
-  description: Team GAMJA의 API 문서
-  license:
-    name: MIT
-servers:
-  - url: http://localhost:3030/
