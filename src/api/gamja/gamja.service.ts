@@ -5,7 +5,7 @@ import { Gamja } from "../../models/domain/Gamja"
 exports.saveGamja = async (req: Request, res: Response) => {
   try {
     const { name, userIdx } = req.body
-    const gamja = await Gamja.create({ name, exp: 0, userIdx })
+    const gamja: Gamja = await Gamja.create({ name, exp: 0, userIdx })
     res.json(gamja)
   } catch (err) {
     res.json(err)

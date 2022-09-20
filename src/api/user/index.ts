@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import passport from "passport"
 
 const router = require("express").Router()
-const user = require("./user.controller")
+const user = require("./user.service")
 
 /**
  * @swagger

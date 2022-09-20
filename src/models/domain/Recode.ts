@@ -1,15 +1,20 @@
-import { DataTypes, Model } from "sequelize"
+import { Association, DataTypes, Model } from "sequelize"
 import sequelize from "../index"
 import { RecodeAttributes } from "../interface/Recode"
+import { User } from "./User"
 
 export class Recode extends Model<RecodeAttributes> {
   public readonly idx!: number
-  public date!: Date
+  public menu!: string
   public kcal!: number
   public userIdx!: number
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
+
+  public static associations: {
+    recodeUser: Association<Recode, User>
+  }
 }
 
 Recode.init(
@@ -19,8 +24,8 @@ Recode.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    date: {
-      type: DataTypes.DATE,
+    menu: {
+      type: DataTypes.STRING,
     },
     kcal: {
       type: DataTypes.DOUBLE,
@@ -37,3 +42,13 @@ Recode.init(
     freezeTableName: true,
   }
 )
+User.hasMany(Recode, {
+  sourceKey: "idx",
+  foreignKey: "userIdx",
+  as: "recodeUser",
+})
+
+Recode.belongsTo(User, {
+  foreignKey: "userIdx",
+  as: "recodeUser",
+})

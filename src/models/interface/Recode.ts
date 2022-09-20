@@ -1,6 +1,6 @@
 export interface RecodeAttributes {
   idx?: number
-  date: Date
+  menu: string
   kcal: number
   userIdx: number
 }
