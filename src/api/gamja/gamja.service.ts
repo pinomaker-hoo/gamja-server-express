@@ -38,7 +38,6 @@ exports.updateGamjaExp = async (req: Request, res: Response) => {
     const user: any = req.user
     const { exp } = req.body
     const gamja = await Gamja.update({ exp }, { where: { userIdx: user.idx } })
-    console.log(gamja)
     res.json(gamja)
   } catch (err) {
     res.json(err)
@@ -48,7 +47,6 @@ exports.updateGamjaExp = async (req: Request, res: Response) => {
 exports.getGamjaRankList = async (req: Request, res: Response) => {
   try {
     const gamjaList = await Gamja.findAll({ order: [["exp", "desc"]] })
-    console.log(gamjaList)
     res.json(gamjaList)
   } catch (err) {
     console.log(err)

@@ -1,6 +1,5 @@
 import passportLocal from "passport-local"
 import passportJwt, { ExtractJwt } from "passport-jwt"
-import passportKakao from "passport-kakao"
 import passport from "passport"
 import { User } from "../../models/domain/User"
 import * as bcrypt from "bcryptjs"

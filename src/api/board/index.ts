@@ -15,11 +15,5 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   board.saveBoard
 )
-
-// passport.authenticate("jwt", { session: false }),
-//   (req: Request, res: Response) => {
-//     res.send("Success")
-//   }
-
 module.exports = router
 export {}

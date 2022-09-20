@@ -29,9 +29,3 @@ exports.getInfo = async (req: Request, res: Response) => {
     res.json(err)
   }
 }
-
-//   public birth!: Date
-//   public gender!: boolean
-//   public height!: number
-//   public weight!: number
-//   public userIdx!: number
