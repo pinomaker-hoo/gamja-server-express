@@ -13,3 +13,5 @@ const create_table_board = async () => {
 }
 
 create_table_board()
+
+// 5.create-table-board.ts/

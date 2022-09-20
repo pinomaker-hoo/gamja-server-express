@@ -1,11 +1,7 @@
-import { Association, DataTypes, Model } from "sequelize"
+import { DataTypes, Model } from "sequelize"
 import sequelize from "../index"
 import { UserAttributes } from "../interface/User"
 import { Provider } from "../interface/Provider"
-import { Gamja } from "./Gamja"
-import { UserInfo } from "./UserInfo"
-import { Recode } from "./Recode"
-import { Board } from "./Board"
 
 export class User extends Model<UserAttributes> {
   public readonly idx?: number
