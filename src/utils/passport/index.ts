@@ -49,10 +49,10 @@ module.exports = () => {
       },
       async (jwtPayload, done) => {
         try {
-          const findUser = await User.findOne({
+          const findUser: any = await User.findOne({
             where: { idx: jwtPayload.idx },
           })
-          return done(null, findUser)
+          return done(null, findUser.dataValues)
         } catch (err) {
           console.error(err)
           done(err)

@@ -3,8 +3,9 @@ import { Board } from "../../models/domain/Board"
 
 exports.saveBoard = async (req: Request, res: Response) => {
   try {
-    const { title, text, userIdx } = req.body
-    const savePost = await Board.create({ title, text, userIdx })
+    const user: any = req.user
+    const { title, text } = req.body
+    const savePost = await Board.create({ title, text, userIdx: user.idx })
     res.json(savePost)
   } catch (err) {
     console.log(err)
@@ -34,8 +35,8 @@ exports.getBoard = async (req: Request, res: Response) => {
 
 exports.getMyBoardList = async (req: Request, res: Response) => {
   try {
-    const { idx } = req.params
-    const findBoardList = await Board.findAll({ where: { userIdx: idx } })
+    const user: any = req.user
+    const findBoardList = await Board.findAll({ where: { userIdx: user.idx } })
     res.json(findBoardList)
   } catch (err) {
     console.log(err)
