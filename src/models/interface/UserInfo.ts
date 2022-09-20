@@ -4,4 +4,5 @@ export interface UserInfoAttributes {
   gender: boolean
   height: number
   weight: number
+  userIdx: number
 }

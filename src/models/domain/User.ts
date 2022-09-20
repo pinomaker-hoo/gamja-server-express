@@ -18,12 +18,7 @@ export class User extends Model<UserAttributes> {
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
 
-  public static associations: {
-    gamja: Association<User, Gamja>
-    userInfo: Association<User, UserInfo>
-    recode: Association<User, Recode>
-    board: Association<User, Board>
-  }
+  public static associations: {}
 }
 
 User.init(
@@ -62,26 +57,18 @@ User.init(
     freezeTableName: true,
   }
 )
-User.hasOne(Gamja, {
-  sourceKey: "idx",
-  foreignKey: "user_idx",
-  as: "gamja",
-})
+// User.hasMany(Gamja)
 
-User.hasOne(UserInfo, {
-  sourceKey: "idx",
-  foreignKey: "user_idx",
-  as: "userInfo",
-})
+// // User.belongsToMany(Gamja, { through: "user_gamja" })
 
-User.hasMany(Recode, {
-  sourceKey: "idx",
-  foreignKey: "user_idx",
-  as: "recode",
-})
+// User.hasMany(Recode, {
+//   sourceKey: "idx",
+//   foreignKey: "user_idx",
+//   as: "recode",
+// })
 
-User.hasMany(Board, {
-  sourceKey: "idx",
-  foreignKey: "user_idx",
-  as: "board",
-})
+// User.hasMany(Board, {
+//   sourceKey: "idx",
+//   foreignKey: "user_idx",
+//   as: "board",
+// })

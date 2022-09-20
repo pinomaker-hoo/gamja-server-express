@@ -1,6 +1,7 @@
-import { DataTypes, Model } from "sequelize"
+import { Association, DataTypes, Model } from "sequelize"
 import sequelize from "../index"
 import { UserInfoAttributes } from "../interface/UserInfo"
+import { User } from "./User"
 
 export class UserInfo extends Model<UserInfoAttributes> {
   public readonly idx!: number
@@ -8,9 +9,14 @@ export class UserInfo extends Model<UserInfoAttributes> {
   public gender!: boolean
   public height!: number
   public weight!: number
+  public userIdx!: number
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
+
+  public static associations: {
+    recodeUser: Association<UserInfo, User>
+  }
 }
 
 UserInfo.init(
@@ -32,6 +38,10 @@ UserInfo.init(
     weight: {
       type: DataTypes.DOUBLE,
     },
+    userIdx: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     modelName: "UserInfo",
@@ -40,3 +50,14 @@ UserInfo.init(
     freezeTableName: true,
   }
 )
+
+User.hasMany(UserInfo, {
+  sourceKey: "idx",
+  foreignKey: "userIdx",
+  as: "infoUser",
+})
+
+UserInfo.belongsTo(User, {
+  foreignKey: "userIdx",
+  as: "infoUser",
+})
