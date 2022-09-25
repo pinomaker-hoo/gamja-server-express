@@ -5,6 +5,7 @@ import * as bcrypt from "bcryptjs"
 import passport from "passport"
 import jwt from "jsonwebtoken"
 
+
 exports.localSave = async (req: Request, res: Response) => {
   const { email, password, name } = req.body
   const hash = await bcrypt.hash(password, 10)
