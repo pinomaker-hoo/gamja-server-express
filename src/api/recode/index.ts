@@ -2,6 +2,7 @@ import passport from "passport"
 
 const router = require("express").Router()
 const recode = require("./recode.service")
+const { uploadImg } = require("../../utils/multer")
 
 router.get(
   "/",
@@ -12,6 +13,13 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   recode.saveRecode
+)
+
+router.post(
+  "/img",
+  uploadImg.single("image"),
+  passport.authenticate("jwt", { session: false }),
+  recode.saveRecodeWithImg
 )
 
 module.exports = router
