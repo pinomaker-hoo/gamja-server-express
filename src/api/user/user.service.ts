@@ -5,7 +5,6 @@ import * as bcrypt from "bcryptjs"
 import passport from "passport"
 import jwt from "jsonwebtoken"
 
-
 exports.localSave = async (req: Request, res: Response) => {
   const { email, password, name } = req.body
   const hash = await bcrypt.hash(password, 10)
@@ -61,8 +60,7 @@ exports.kakaoLogin = async (req: Request, res: Response) => {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
-      res.json(token)
-      // return res.redirect("http://localhost:5173")
+      return res.redirect("http://localhost:3000")
     })
   })(req, res)
 }
