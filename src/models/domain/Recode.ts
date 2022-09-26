@@ -8,6 +8,7 @@ export class Recode extends Model<RecodeAttributes> {
   public menu!: string
   public kcal!: number
   public userIdx!: number
+  public imgPath!: string
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
@@ -29,6 +30,9 @@ Recode.init(
     },
     kcal: {
       type: DataTypes.DOUBLE,
+    },
+    imgPath: {
+      type: DataTypes.STRING,
     },
     userIdx: {
       type: DataTypes.INTEGER,
