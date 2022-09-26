@@ -5,7 +5,6 @@ import { User } from "../../models/domain/User"
 import * as bcrypt from "bcryptjs"
 import { Request } from "express"
 import { Provider } from "../../models/interface/Provider"
-import { UserInfo } from "../../models/domain/UserInfo"
 
 const LocalStrategy = passportLocal.Strategy
 const JwtStrategy = passportJwt.Strategy

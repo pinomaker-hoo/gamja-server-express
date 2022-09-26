@@ -60,7 +60,7 @@ exports.kakaoLogin = async (req: Request, res: Response) => {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
-      return res.redirect("http://localhost:5173")
+      return res.redirect("http://localhost:3000")
     })
   })(req, res)
 }
