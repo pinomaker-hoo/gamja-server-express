@@ -60,7 +60,7 @@ exports.kakaoLogin = async (req: Request, res: Response) => {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
-      return res.redirect("http://localhost:3000")
+      return res.redirect("http://localhost:5173")
     })
   })(req, res)
 }
@@ -85,4 +85,11 @@ exports.appKakaoLogin = async (req: Request, res: Response) => {
       res.json({ token: token })
     })
   })(req, res)
+}
+
+exports.googleLogin = async (req: Request, res: Response) => {
+  passport.authenticate("google", { failureRedirect: "/" }), //? 그리고 passport 로그인 전략에 의해 googleStrategy로 가서 구글계정 정보와 DB를 비교해서 회원가입시키거나 로그인 처리하게 한다.
+    (req: Request, res: Response) => {
+      res.redirect("/")
+    }
 }

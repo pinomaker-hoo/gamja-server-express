@@ -8,6 +8,11 @@ router.post("/local", user.localLogin)
 router.get("/kakao", passport.authenticate("kakao"))
 router.get("/kakao/callback", user.kakaoLogin)
 router.get("/kakao/app/callback", user.appKakaoLogin)
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+)
+router.get("/google/callback", user.googleLogin)
 
 module.exports = router
 export {}

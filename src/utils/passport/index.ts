@@ -5,10 +5,12 @@ import { User } from "../../models/domain/User"
 import * as bcrypt from "bcryptjs"
 import { Request } from "express"
 import { Provider } from "../../models/interface/Provider"
+import { UserInfo } from "../../models/domain/UserInfo"
 
 const LocalStrategy = passportLocal.Strategy
 const JwtStrategy = passportJwt.Strategy
 const KakaoStrategy = require("passport-kakao").Strategy
+const GoogleStrategy = require("passport-google-oauth20").Strategy
 
 module.exports = () => {
   passport.use(
@@ -94,6 +96,43 @@ module.exports = () => {
         } catch (err) {
           console.error(err)
           done
+        }
+      }
+    )
+  )
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID:
+          "516447289291-hu63870f7dcej55qvo3cs9a3ca3bfmru.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "http://localhost:3030/api/user/google/callback",
+      },
+      async (
+        accessToken: string,
+        refreshToken: string,
+        profile: any,
+        done: any
+      ) => {
+        console.log("google profile : ", profile)
+        try {
+          const exUser = await User.findOne({
+            where: { providerId: profile.id },
+          })
+          if (exUser) {
+            done(null, exUser)
+          } else {
+            const newUser = await User.create({
+              email: profile?.email[0].value,
+              name: profile.displayName,
+              provider: Provider.GOOGLE,
+              providerId: profile.id,
+            })
+            done(null, newUser)
+          }
+        } catch (error) {
+          console.error(error)
+          done(error)
         }
       }
     )
