@@ -31,14 +31,16 @@ exports.localLogin = async (req: Request, res: Response) => {
     }
     req.login(user, { session: false }, (err) => {
       if (err) {
+        console.log(err)
         res.send(err)
       }
       const token = jwt.sign({ idx: user.idx }, "123")
-      res.cookie("accessToken", token, {
-        expires: new Date(Date.now() + 86400e3),
-        sameSite: "lax",
-      })
-      return res.json({ user, token })
+      // res.cookie("accessToken", token, {
+      //   expires: new Date(Date.now() + 86400e3),
+      //   sameSite: "lax",
+      // })
+      console.log(token)
+      return res.send({ user, token })
     })
   })(req, res)
 }
@@ -60,7 +62,8 @@ exports.kakaoLogin = async (req: Request, res: Response) => {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
-      return res.redirect("http://localhost:3000")
+      res.json(token)
+      // return res.redirect("http://localhost:3000")
     })
   })(req, res)
 }
