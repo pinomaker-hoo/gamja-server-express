@@ -18,7 +18,7 @@ module.exports = () => {
         usernameField: "email",
         passwordField: "password",
       },
-      async (email: any, password: any, done: any) => {
+      async (email: string, password: string, done: any) => {
         try {
           const findUser = await User.findOne({ where: { email: email } })
           if (!findUser)
@@ -73,6 +73,7 @@ module.exports = () => {
         done: any
       ) => {
         try {
+          console.log(profile)
           const findUser = await User.findOne({
             where: { providerId: profile.id },
           })
@@ -94,7 +95,7 @@ module.exports = () => {
           }
         } catch (err) {
           console.error(err)
-          done
+          done(err)
         }
       }
     )
@@ -103,9 +104,9 @@ module.exports = () => {
     new GoogleStrategy(
       {
         clientID:
-          "516447289291-hu63870f7dcej55qvo3cs9a3ca3bfmru.apps.googleusercontent.com",
-        clientSecret: "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",
-        callbackURL: "http://localhost:3030/api/user/google/callback",
+          "516447289291-tghcsm515g30v9hqmhd937vnc3h2qcc2.apps.googleusercontent.com", // 구글 로그인에서 발급받은 REST API 키
+        clientSecret: "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",
+        callbackURL: "/api/user/google/callback", // 구글 로그인 Redirect URI 경로
       },
       async (
         accessToken: string,
