@@ -15,7 +15,7 @@ exports.localSave = async (req: Request, res: Response) => {
       name,
       provider: Provider.LOCAL,
     })
-    res.json({ result: true })
+    res.json({ saveUser })
   } catch (err) {
     console.log(err)
   }
