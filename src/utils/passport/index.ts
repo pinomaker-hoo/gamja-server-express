@@ -8,8 +8,6 @@ import { Provider } from "../../models/interface/Provider"
 
 const LocalStrategy = passportLocal.Strategy
 const JwtStrategy = passportJwt.Strategy
-const KakaoStrategy = require("passport-kakao").Strategy
-const GoogleStrategy = require("passport-google-oauth20").Strategy
 
 module.exports = () => {
   passport.use(
@@ -56,83 +54,6 @@ module.exports = () => {
         } catch (err) {
           console.error(err)
           done(err)
-        }
-      }
-    )
-  )
-  passport.use(
-    new KakaoStrategy(
-      {
-        clientID: "4ec15bfbe24f7905a7b3d99a8a988aae",
-        callbackURL: "http://localhost:3030/api/user/kakao/callback",
-      },
-      async (
-        accessToken: string,
-        refreshToken: string,
-        profile: any,
-        done: any
-      ) => {
-        try {
-          console.log(profile)
-          const findUser = await User.findOne({
-            where: { providerId: profile.id },
-          })
-          if (findUser) {
-            done(null, findUser)
-          } else {
-            const profileJson = profile._json
-            const kakao_account = profileJson.kakao_account
-            const saveUser = await User.create({
-              email:
-                kakao_account.has_email && !kakao_account.email_needs_agreement
-                  ? kakao_account.email
-                  : null,
-              name: kakao_account.profile.nickname,
-              providerId: profile.id,
-              provider: Provider.KAKAO,
-            })
-            done(null, saveUser)
-          }
-        } catch (err) {
-          console.error(err)
-          done(err)
-        }
-      }
-    )
-  )
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID:
-          "516447289291-tghcsm515g30v9hqmhd937vnc3h2qcc2.apps.googleusercontent.com", // 구글 로그인에서 발급받은 REST API 키
-        clientSecret: "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",
-        callbackURL: "/api/user/google/callback", // 구글 로그인 Redirect URI 경로
-      },
-      async (
-        accessToken: string,
-        refreshToken: string,
-        profile: any,
-        done: any
-      ) => {
-        console.log("google profile : ", profile)
-        try {
-          const exUser = await User.findOne({
-            where: { providerId: profile.id },
-          })
-          if (exUser) {
-            done(null, exUser)
-          } else {
-            const newUser = await User.create({
-              email: profile?.email[0].value,
-              name: profile.displayName,
-              provider: Provider.GOOGLE,
-              providerId: profile.id,
-            })
-            done(null, newUser)
-          }
-        } catch (error) {
-          console.error(error)
-          done(error)
         }
       }
     )
