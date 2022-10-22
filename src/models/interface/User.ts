@@ -5,6 +5,4 @@ export interface UserAttributes {
   email: string
   password?: string
   name: string
-  provider: Provider
-  providerId?: string
 }

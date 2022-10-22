@@ -1,16 +1,12 @@
 import { DataTypes, Model } from "sequelize"
 import sequelize from "../index"
 import { UserAttributes } from "../interface/User"
-import { Provider } from "../interface/Provider"
 
 export class User extends Model<UserAttributes> {
   public readonly idx?: number
   public email!: string
   public password!: string
   public name!: string
-  public provider!: Provider
-  public providerId!: string
-
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
 
@@ -37,14 +33,6 @@ User.init(
       type: DataTypes.STRING(45),
       allowNull: false,
     },
-    provider: {
-      type: DataTypes.STRING(15),
-      allowNull: false,
-    },
-    providerId: {
-      type: DataTypes.STRING(45),
-      allowNull: true,
-    },
   },
   {
     modelName: "User",
@@ -53,18 +41,3 @@ User.init(
     freezeTableName: true,
   }
 )
-// User.hasMany(Gamja)
-
-// // User.belongsToMany(Gamja, { through: "user_gamja" })
-
-// User.hasMany(Recode, {
-//   sourceKey: "idx",
-//   foreignKey: "user_idx",
-//   as: "recode",
-// })
-
-// User.hasMany(Board, {
-//   sourceKey: "idx",
-//   foreignKey: "user_idx",
-//   as: "board",
-// })
