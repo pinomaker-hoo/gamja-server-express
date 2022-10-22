@@ -20,6 +20,7 @@ exports.localSave = async (req: Request, res: Response) => {
 }
 
 exports.localLogin = async (req: Request, res: Response) => {
+  console.log(1)
   passport.authenticate("local", { session: false }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({

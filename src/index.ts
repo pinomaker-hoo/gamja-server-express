@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(cors())
 app.use(
   cors({
-    origin: true,
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     preflightContinue: false,
     optionsSuccessStatus: 204,
