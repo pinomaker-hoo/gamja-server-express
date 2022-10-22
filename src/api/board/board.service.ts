@@ -43,3 +43,26 @@ exports.getMyBoardList = async (req: Request, res: Response) => {
     res.json(err)
   }
 }
+
+exports.deleteBoard = async (req: Request, res: Response) => {
+  try {
+    const { idx } = req.params
+    const deleteBoard = await Board.destroy({ where: { idx } })
+    res.status(200).json(deleteBoard)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err)
+  }
+}
+
+exports.updateBoard = async (req: Request, res: Response) => {
+  try {
+    const { idx } = req.params
+    const { title, text } = req.body
+    const updateBoard = await Board.update({ title, text }, { where: { idx } })
+    res.status(200).json(updateBoard)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err)
+  }
+}

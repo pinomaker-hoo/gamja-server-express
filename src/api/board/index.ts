@@ -15,5 +15,7 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   board.saveBoard
 )
+router.patch("/:idx", board.updateBoard)
+router.delete("/:idx", board.deleteBoard)
 module.exports = router
 export {}
