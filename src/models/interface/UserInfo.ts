@@ -1,7 +1,7 @@
 export interface UserInfoAttributes {
   idx?: number
-  birth: Date
   gender: boolean
+  goalKcal: number
   height: number
   weight: number
   userIdx: number

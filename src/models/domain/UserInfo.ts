@@ -5,8 +5,8 @@ import { User } from "./User"
 
 export class UserInfo extends Model<UserInfoAttributes> {
   public readonly idx!: number
-  public birth!: Date
   public gender!: boolean
+  public goalKcal!: number
   public height!: number
   public weight!: number
   public userIdx!: number
@@ -26,11 +26,11 @@ UserInfo.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    birth: {
-      type: DataTypes.DATE,
-    },
     gender: {
       type: DataTypes.CHAR,
+    },
+    goalKcal: {
+      type: DataTypes.DOUBLE,
     },
     height: {
       type: DataTypes.DOUBLE,

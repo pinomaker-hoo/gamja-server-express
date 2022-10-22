@@ -7,6 +7,7 @@ export class Recode extends Model<RecodeAttributes> {
   public readonly idx!: number
   public menu!: string
   public kcal!: number
+  public weight!: number
   public userIdx!: number
 
   public readonly createdAt!: Date
@@ -28,6 +29,9 @@ Recode.init(
       type: DataTypes.STRING,
     },
     kcal: {
+      type: DataTypes.DOUBLE,
+    },
+    weight: {
       type: DataTypes.DOUBLE,
     },
     userIdx: {
