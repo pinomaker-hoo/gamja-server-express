@@ -1,6 +1,5 @@
 import { Response, Request } from "express"
 import { User } from "../../models/domain/User"
-import { Provider } from "../../models/interface/Provider"
 import * as bcrypt from "bcryptjs"
 import passport from "passport"
 import jwt from "jsonwebtoken"
@@ -13,7 +12,6 @@ exports.localSave = async (req: Request, res: Response) => {
       email,
       password: hash,
       name,
-      provider: Provider.LOCAL,
     })
     res.json({ saveUser })
   } catch (err) {

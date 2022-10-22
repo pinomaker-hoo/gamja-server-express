@@ -9,7 +9,6 @@ exports.saveRecode = async (req: Request, res: Response) => {
       menu,
       userIdx: user.idx,
       kcal,
-      imgPath: "",
     })
     res.json(recode)
   } catch (err) {
@@ -40,7 +39,6 @@ exports.saveRecodeWithImg = async (req: any, res: Response) => {
       menu,
       userIdx: user.idx,
       kcal,
-      imgPath: filename,
     })
     res.json(recode)
   } catch (err) {
