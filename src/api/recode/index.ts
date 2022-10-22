@@ -15,12 +15,5 @@ router.post(
   recode.saveRecode
 )
 
-router.post(
-  "/img",
-  passport.authenticate("jwt", { session: false }),
-  uploadImg.single("image"),
-  recode.saveRecodeWithImg
-)
-
 module.exports = router
 export {}
