@@ -9,6 +9,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   recode.getRecode
 )
+router.get(
+  "/day",
+  passport.authenticate("jwt", { session: false }),
+  recode.getRecodeByDay
+)
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),

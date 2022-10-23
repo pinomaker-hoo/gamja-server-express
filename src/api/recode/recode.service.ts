@@ -37,9 +37,26 @@ exports.getRecodeByDay = async (req: Request, res: Response) => {
     const recode: Recode[] = await Recode.findAll({
       where: { userIdx: user.idx },
     })
-    res.status(200).json(recode)
+    const today = await getDay(new Date())
+    res
+      .status(200)
+      .json(
+        [...recode].filter(
+          async (item: any) => (await getDay(item.createdAt)) === "1"
+        )
+      )
   } catch (err) {
     console.log(err)
     res.status(400).json(err)
   }
+}
+
+const getDay = async (date: Date) => {
+  console.log(date)
+  const year = date.getFullYear()
+  const month = ("0" + (date.getMonth() + 1)).slice(-2)
+  const day = ("0" + date.getDate()).slice(-2)
+  const a = year + "-" + month + "-" + day
+  console.log(a)
+  return a
 }
