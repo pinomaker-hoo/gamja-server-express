@@ -8,6 +8,7 @@ export class Board extends Model<BoardAttributes> {
   public title!: string
   public text!: string
   public userIdx!: number
+  public imgPath!: string
 
   public readonly createdAt!: Date
   public readonly updatedAt!: Date
@@ -29,6 +30,10 @@ Board.init(
     },
     text: {
       type: DataTypes.STRING(255),
+    },
+    imgPath: {
+      type: DataTypes.STRING(),
+      allowNull: true,
     },
     userIdx: {
       type: DataTypes.INTEGER,
