@@ -1,15 +1,19 @@
 import { Response, Request } from "express"
 import { Recode } from "../../models/domain/Recode"
+import { decodeBase } from "../../utils/base64"
+import { getDay, getNumber } from "../../utils/other"
 
 exports.saveRecode = async (req: Request, res: Response) => {
   try {
     const user: any = req.user
-    const { menu, kcal, weight } = req.body
+    const { menu, kcal, weight, base } = req.body
+    const imgPath: string = (await baseToImg(base)) || ""
     const recode: Recode = await Recode.create({
       menu,
       userIdx: user.idx,
       kcal,
       weight,
+      imgPath,
     })
     res.json(recode)
   } catch (err) {
@@ -51,12 +55,12 @@ exports.getRecodeByDay = async (req: Request, res: Response) => {
   }
 }
 
-const getDay = async (date: Date) => {
-  console.log(date)
-  const year = date.getFullYear()
-  const month = ("0" + (date.getMonth() + 1)).slice(-2)
-  const day = ("0" + date.getDate()).slice(-2)
-  const a = year + "-" + month + "-" + day
-  console.log(a)
-  return a
+const baseToImg = async (encode: string) => {
+  try {
+    const path: string = `./src/source/img/base/${getNumber()}-${Date.now()}`
+    const image = await decodeBase(encode, path, "jpg")
+    return path
+  } catch (err) {
+    console.log(err)
+  }
 }
