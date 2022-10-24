@@ -5,7 +5,12 @@ exports.saveBoard = async (req: Request, res: Response) => {
   try {
     const user: any = req.user
     const { title, text } = req.body
-    const savePost = await Board.create({ title, text, userIdx: user.idx })
+    const savePost = await Board.create({
+      title,
+      text,
+      userIdx: user.idx,
+      imgPath: "",
+    })
     res.json(savePost)
   } catch (err) {
     console.log(err)
