@@ -8,7 +8,7 @@ const getNumber = () => {
 
 const storageImg = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "src/source/images/")
+    cb(null, "src/source/img/board")
   },
   filename: (req, file, cb) => {
     cb(null, `${getNumber()}-${Date.now()}.jpeg`)
