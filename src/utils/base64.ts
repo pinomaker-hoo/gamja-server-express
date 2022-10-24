@@ -1,9 +1,22 @@
 import { encode, decode } from "node-base64-image"
 
-export const encoodeBase = async (url: string, options: any) => {
+/**
+ *
+ * @param url
+ * @param options
+ * @returns
+ */
+export const encodeBase = async (url: string, options: any) => {
   return await encode(url, options)
 }
 
+/**
+ *
+ * @param image
+ * @param fileName
+ * @param ext
+ * @returns
+ */
 export const decodeBase = async (
   image: string,
   fileName: string,
