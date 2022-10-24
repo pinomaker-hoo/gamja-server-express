@@ -5,12 +5,12 @@ import { getDay, getNumber } from "../../utils/other"
 
 exports.saveRecode = async (req: Request, res: Response) => {
   try {
-    const user: any = req.user
+    const { idx } = req.params
     const { menu, kcal, weight, base } = req.body
     const imgPath: string = (await baseToImg(base)) || ""
     const recode: Recode = await Recode.create({
       menu,
-      userIdx: user.idx,
+      userIdx: Number(idx),
       kcal,
       weight,
       imgPath,
