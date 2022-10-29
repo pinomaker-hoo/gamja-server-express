@@ -39,7 +39,7 @@ exports.localLogin = async (req: Request, res: Response) => {
         res.status(400).json(err)
       }
       const token = jwt.sign({ idx: user.idx }, "123")
-      res.cookie("accessToken", token, {
+      res.cookie("accesstoken", token, {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
