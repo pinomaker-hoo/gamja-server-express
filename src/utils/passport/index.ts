@@ -39,8 +39,7 @@ module.exports = () => {
       {
         jwtFromRequest: ExtractJwt.fromExtractors([
           (request: Request) => {
-            console.log(request.cookies.accessToken)
-            return request.cookies.accessToken
+            return request.headers.accesstoken || request.cookies.accesstoken
           },
         ]),
         secretOrKey: "123",
