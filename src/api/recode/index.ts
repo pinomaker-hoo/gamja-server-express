@@ -13,6 +13,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   recode.getRecodeByDay
 )
+router.get("/:idx", recode.getRecodeForIot)
 router.post("/:idx", recode.saveRecode)
 
 module.exports = router

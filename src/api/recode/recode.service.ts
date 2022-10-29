@@ -36,6 +36,19 @@ exports.getRecode = async (req: Request, res: Response) => {
   }
 }
 
+exports.getRecodeForIot = async (req: Request, res: Response) => {
+  try {
+    const { idx } = req.params
+    const recode: Recode[] = await Recode.findAll({
+      where: { userIdx: idx },
+    })
+    res.status(200).json(recode)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err)
+  }
+}
+
 exports.getRecodeByDay = async (req: Request, res: Response) => {
   try {
     const user: any = req.user
