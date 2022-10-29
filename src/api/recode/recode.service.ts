@@ -1,4 +1,5 @@
 import { Response, Request } from "express"
+import { rmSync } from "fs"
 import { Recode } from "../../models/domain/Recode"
 import { decodeBase } from "../../utils/base64"
 import { getDay, getNumber } from "../../utils/other"
@@ -15,10 +16,10 @@ exports.saveRecode = async (req: Request, res: Response) => {
       weight,
       imgPath,
     })
-    res.json(recode)
+    res.status(200).json(recode)
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
@@ -28,10 +29,10 @@ exports.getRecode = async (req: Request, res: Response) => {
     const recode: Recode[] = await Recode.findAll({
       where: { userIdx: user.idx },
     })
-    res.json(recode)
+    res.status(200).json(recode)
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 

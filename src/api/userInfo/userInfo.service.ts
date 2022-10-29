@@ -13,10 +13,10 @@ exports.infoSave = async (req: Request, res: Response) => {
       goalKcal,
       userIdx: user.idx,
     })
-    res.json(userInfo)
+    res.status(200).json(userInfo)
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
@@ -24,10 +24,10 @@ exports.getInfo = async (req: Request, res: Response) => {
   try {
     const user: any = req.user
     const info = await UserInfo.findOne({ where: { userIdx: user.idx } })
-    res.json(info)
+    res.status(200).json(info)
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 

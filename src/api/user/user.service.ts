@@ -13,14 +13,19 @@ exports.localSave = async (req: Request, res: Response) => {
       password: hash,
       name,
     })
-    res.json({ saveUser })
+    const token = jwt.sign({ idx: saveUser.idx }, "123")
+    res.cookie("accessToken", token, {
+      expires: new Date(Date.now() + 86400e3),
+      sameSite: "lax",
+    })
+    res.status(200).json({ saveUser, token })
   } catch (err) {
     console.log(err)
+    res.status(400).json(err)
   }
 }
 
 exports.localLogin = async (req: Request, res: Response) => {
-  console.log(1)
   passport.authenticate("local", { session: false }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
@@ -31,14 +36,14 @@ exports.localLogin = async (req: Request, res: Response) => {
     req.login(user, { session: false }, (err) => {
       if (err) {
         console.log(err)
-        res.send(err)
+        res.status(400).json(err)
       }
       const token = jwt.sign({ idx: user.idx }, "123")
       res.cookie("accessToken", token, {
         expires: new Date(Date.now() + 86400e3),
         sameSite: "lax",
       })
-      return res.send({ user, token })
+      return res.status(200).json({ user, token })
     })
   })(req, res)
 }

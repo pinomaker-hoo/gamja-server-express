@@ -1,5 +1,6 @@
 import { Response, Request } from "express"
 import { Board } from "../../models/domain/Board"
+import { User } from "../../models/domain/User"
 
 exports.saveBoard = async (req: Request, res: Response) => {
   try {
@@ -11,19 +12,19 @@ exports.saveBoard = async (req: Request, res: Response) => {
       userIdx: user.idx,
       imgPath: "",
     })
-    res.json(savePost)
+    res.status(200).json(savePost)
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
 exports.getBoardList = async (req: Request, res: Response) => {
   try {
     const boardList = await Board.findAll({ order: [["createdAt", "desc"]] })
-    res.json(boardList)
+    res.status(200).json(boardList)
   } catch (err) {
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
@@ -31,10 +32,13 @@ exports.getBoard = async (req: Request, res: Response) => {
   try {
     const { idx } = req.params
     const findBoard = await Board.findOne({ where: { idx } })
-    res.json(findBoard)
+    const user = await User.findOne({
+      where: { idx: findBoard?.userIdx },
+    })
+    res.status(200).json({ findBoard, user })
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
@@ -42,10 +46,10 @@ exports.getMyBoardList = async (req: Request, res: Response) => {
   try {
     const user: any = req.user
     const findBoardList = await Board.findAll({ where: { userIdx: user.idx } })
-    res.json(findBoardList)
+    res.status(200).json({ data: findBoardList, user })
   } catch (err) {
     console.log(err)
-    res.json(err)
+    res.status(400).json(err)
   }
 }
 
