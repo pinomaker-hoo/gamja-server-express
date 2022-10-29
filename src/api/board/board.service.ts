@@ -21,9 +21,18 @@ exports.saveBoard = async (req: Request, res: Response) => {
 
 exports.getBoardList = async (req: Request, res: Response) => {
   try {
-    const boardList = await Board.findAll({ order: [["createdAt", "desc"]] })
+    const boardList = await Board.findAll({
+      order: [["createdAt", "desc"]],
+      include: [
+        {
+          model: User,
+          as: "boardUser",
+        },
+      ],
+    })
     res.status(200).json(boardList)
   } catch (err) {
+    console.log(err)
     res.status(400).json(err)
   }
 }
